@@ -1,0 +1,26 @@
+import threading
+from time import sleep
+import os
+
+a=1
+
+#线程函数
+def music():
+    global a
+    print("a=",a)
+    a = 1000
+    for i in range(5):
+        sleep(2)
+        print("社会摇",os.getpid())
+
+#创建线程对象
+t = threading.Thread(target = music)
+t.start()
+
+for i in range(5):
+    sleep(1.5)
+    print("想听灌篮高手",os.getpid())
+
+t.join()
+
+print("main thread a =",a)

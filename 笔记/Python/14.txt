@@ -1,0 +1,209 @@
+函数装饰器
+	原理：用装饰器函数的返回值改变原函数名变量的绑定关系。
+	
+文档字符串：记录在 函数的__doc__属性***
+
+help（函数名）****
+
+
+模块，module 
+    导入语句：
+	import  语句
+	    import math 把模块整体导入
+	from import 语句
+	    from math import factorial， pi,...
+	form import * 语句
+	    from math  import *
+dir ()显示当前作用域有哪些属性，变量
+
+模块分为四类：内置c。标准库python，第三方模块，用户自己编写的module
+
+数学模块  math
+
+时间模块  time
+
+今日笔记
+系统模块sys
+   运行时系统相关的信息
+	文档看网页：
+用户自定义模块
+	要求：
+	    模块名以‘.py’结尾
+	    模块名必须是标识符的命名规则
+	    避免名称和内建模块冲突
+导入方式：
+	import 语句
+	form import
+	form import * 语句
+示例见：
+	mymod.py 和 test_mymod.py
+
+def myfac（n）:
+    print("正在计算%d的阶乘..."%n)
+
+def mysum(n):
+    print("正在计算1+2+3+4+5+6+7+8"，n,‘的和’)
+
+
+name1=‘audi’
+name2='tesla'
+import mymod
+         mymod.myfac(5)
+         mymod.mysum(1000)
+         print(mymod.name)
+      #from import(语句导入自定义模块)
+       from mymod import myfac as fac,mysum,name 
+   import 语句的搜索路径顺序
+        1.索引内建模块  builtin
+        2.搜索程序的进行时路径（当前路径）
+        3.sys.path提供的路径
+        4.
+   两种方法让用户自定义模块被导入：
+        1）将模块安装（复制）到sys.path提供的路径
+        2）在运行程序时，在sys.path里添加自定义的路径
+
+ 模块的加载过程：
+       在模块导入时，模块的所有语句都会执行
+       如果一个模块已经被导入，则再次导入时不会重新执行模块内的语句
+
+   模块的重新加载：
+       import mymod
+       import imp
+       imp.reload(mymod)
+
+
+模块被导入和执行的过程
+	1、先搜索相关路径找模块文件（.py）
+	2、判断是否有此模块对应的.pyc，如果pyc文件存在且比.py.文件新则直接加载。pyc文件
+	否则用模块名.py文件生成.pyc并加载执行
+模块的编译：
+         编译            解释执行
+mymod.py ----->mymod.pyc--------->python3
+
+模块的属性
+    模块的文档字符串
+	模块内的第一次没有赋值给任何变量的字符串为模块的文档字符串，模块内的文档字符串绑定在模块的__doc__属性上
+    __doc__属性。用来绑定文档字符串
+
+    __file__属性
+	__file__属性用于绑定此模块对应的文件路径
+    __name__属性
+	作用：
+	    1、用来记录模块自身的名字
+	    2、用来判断是否为主模块
+		（注：主模块是指程序最先被Python3执行的模块）
+	说明：
+	    当次模块为主模块运行时，__name__的值为'__main__'
+	    当此模块不是主模块时，__name__绑定模块的名字。
+
+模块的__all__列表：
+	模块中的__all__列表必须是一个字符串列表
+	作用：
+	    当用form mymod import  *
+	    导入时，只导入__all__列表的属性
+示例：
+
+#mymod2.py
+#次列表限定当用from mymod2 import *只导入f1  var1
+
+__all__=['f1','var1']
+
+def f1（）：
+    pass
+def f2（）：
+    pass
+def f3():
+    pass
+var1=100
+var=200
+
+模块的隐藏属性
+   模块中以‘_’开头的属性，在form xxxx import
+   *导入时将不被导入，通常称这些属性为隐藏属性
+
+#mymod3.py
+
+#此模块示意模块的隐藏属性
+def f1 ():
+    pass
+def _f2 ():
+    pass
+def _f3 ():
+    pass
+name1="abc"
+_name2="123"
+
+
+
+随机模块：
+文档参见：
+
+
+包（模块包）package
+    包的定义
+	宝石将模块以文件夹的组织形式进行分组管理的方法
+    作用：将一系列模块进行分类管理，有利于防止命名冲突可以在需要时加载一个或部分模块而不是全部模块
+包示例：
+mypack/
+    __init__.py
+    menu.py
+    games/
+        __init__.py
+	contra.py
+	supermario.py
+	tank.py
+    offoce/
+	__init__.py word.py excel.py
+
+
+包内的__init__.py文件
+__init__.py是常规包内必须存在的文件
+__init__.py文件会在包加载时被自动调用
+作用：
+编写此包的内容
+编写包的文档字符串
+包的导入
+规则类似于模块的导入规则
+import 包名【as 包新名】
+import 包名.模块名 [as 模块新名]
+import 包名.子包名.模块名[as 模块新名]
+
+form 包名  import 模块名 [as 模块新名]
+form 包名.子包名  import 模块名 [as 模块新名]
+form 包名.子包名.模块名  import 属性名 [as 模块新名]
+
+from 包名 import *
+from 包名.模块名 import*
+
+
+import 语句搜索引  包的路径顺序
+	1、搜索程序运行时的路径（当前路径）
+	2、sys.path提供的路径
+
+def test_pack():
+	print("zheshi  mypack/__init__.py  lide test_pack")
+
+print("mypackbiejiazai")
+
+__init__.py内的__all__列表
+作用：
+	用来记录此包中有哪儿些子包或模块需要导入
+	当用form包 import *语句导入模块时，只查找__all__列表中所有的模块或子包
+说明：
+	__all__列表只有在from xxx  import  * 导入时，起作用
+
+包的相对导入：
+	包的相对导入是指包内模块的相互导入
+
+	语法：
+	form 相对路径包或模块名 import 属性或模块名
+	或
+	from 相对路径包或模块名 import *
+	相对路径
+	在from 和 import 间可以用相对路径：
+	. 代表当前目录 
+	.. 代表上一级目录
+ 	... 代表上二级目录
+	....以此类推
+	注：相对导入时不能超出包的外部
+示例：

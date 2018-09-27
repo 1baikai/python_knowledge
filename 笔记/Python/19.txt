@@ -1,0 +1,191 @@
+面向对象：
+类：描述对象，创建对象
+构造函数
+    类名（实际传参）
+对象有两种特征：：
+属性         实例变量（实例属性）
+
+行为         实例方法
+
+初始化方法（等同于C++构造函数）
+    def  __init__(self [,形参列表])：
+	语句块
+析构方法：
+    def  __def__(self):
+	语句块
+
+
+del 语句：
+    删除对象的实例属性
+预置的实例属性
+__dict__
+__class__
+
+isinstance(obj,类或元组)
+type（obj）
+
+
+
+今天笔记：
+
+
+
+
+
+类变量：
+   类变量是累的属性，此属性属于类，不属于此类的实例
+    作用：
+	通常用来存储该类创建对象的共有属性
+    说明：
+	类变量可以通过该类直接访问
+	类变量可以通过类的实例直接访问
+	类变量可以通过此类的对象__class__属性间接访问
+
+# class Human:
+#     total_count = 0
+# print(Human.total_count)
+# h1 = Human()
+# print(h1.total_count)
+# #借助此类的实例访问类变量（类属性）
+# h1.total_count = 10000
+# print(h1.total_count)
+# print(Human.total_count)
+# Human.total_count += 1
+# print(Human.total_count)
+# print(dir())
+
+
+
+class Human:
+    total_count = 0
+    def __init__(self,n):
+        self.name = n
+        self.__class__.total_count += 1
+        print(n,'对象被创建')
+    def __del__(self):
+        print(self.name, '对象被销毁')
+        self.__class__.total_count -= 1
+L=[]
+L.append(Human("张飞"))
+L.append(Human("关羽"))
+print("d当前人物个数是",HUman.total_count)
+
+
+
+累的文档字符串
+    类内第一个没有赋值给任何变量的字符串为为类的文档字符串
+    类的文档字符串可以通过help（）函数查看
+    类的文档字符串绑定在类的__doc__属性上：
+
+
+类的__slots__列表
+   作用：
+	限定一个类创建的实例只能有固定的属性（实例变量）
+	不允许对象添加列表意外的实例属性（实例变量）
+	防止用户因错写属性名而发生程序错误
+说明：
+    
+__slots__属性绑定一个字符串列表
+含有__slots__属性的类所创建的实例对象没有__dict__属性，即此实例不用管字典来存储对象的实例属性
+
+类方法@classmethod
+类方法适用于描述类的行为的方法，类方法属于类，不属于类的实例对象
+说明：
+	类方法需要使用 @classmethod装饰器定义
+	类方法至少有一个形参，第一个形参用于绑定类，约定写为‘cls’
+	类和该类的实例都可以调用类方法
+	类方法不能访问此类创建的对象的实例属性
+   静态方法@staticmethod
+         静态方法是定义在类的内部的函数，此函数的作用域是类的内部
+     
+         说明：
+            静态方法需要使用@staticmethod装饰器定义
+            静态方法与普通函数定义相同，不需要传入self实例参数和cls类参数
+            静态方法只能凭借该类或类创建的实例调用
+            静态方法不能访问类变量和实例变量
+         示例：
+            
+            class A:
+                @staticmethod
+                def myadd(a, b)
+                    rerun a + b
+            print(A.myadd(100,200))(类被忽略，100，200分别传给a,b)
+            a = A()
+            print(a.myadd(300,400))
+
+
+继承inheritance和派生 derived
+
+什么是继承/派生
+	继承是从已有的类中派生出新的类，新类具有原类的数据属性和行为，并能扩展新的行为
+	2、派生类就是从一个已有的类中衍生出新的类，在新类的基础上添加新的属性和行为
+为什么继承、派生
+	继承的目的是延续旧类的功能
+	派生的目的是旧类的基础上改变原有的功能
+名词：
+	基类(bass class)/  超类(super class)   父类(father class)  
+	 派生类  (derived) 子类(child class)
+单继承：
+	语法：
+		class 类名（基类名）：
+		    语句块
+	说明：
+		单继承是指派生类有一个基类衍生出来的新类
+示例见：
+
+继承派生机制的作用：
+1、可以将一些共有功能加在基类中，实现代码的共享
+2、在不改变
+
+继承说明：
+	Python3 任何类都之间或间接的继承自object类
+	object类是一切类的超类
+类的__base__属性
+__base__属性用来记录此类的基类
+
+覆盖override
+   什么是覆盖
+ 	覆盖是指在有继承关系的类中，子类中实现了与基类同名的方法，在子类的实例调用该方法时，实际调用的是子类中的覆盖版本，这种现象较覆盖、
+示例见：
+
+
+调用方式：
+	基类名。方法名（实例，实际调用传参）
+
+
+super函数
+super（cls,obj）返回绑定超类的实例（要求obj必须为cls类型的实例）
+super（）赶回绑定超类的实例，等同于：super（__class__,实例方法的第一个参数，必须在方法内调用）
+作用：
+借助super（）返回的实例间接调用父类的覆盖方法，
+
+
+
+显示调用基类的初始化方法
+	当子类中实现了__init__方法，基类的构造方法并不会被调用，此时需要显示调用。
+
+
+
+   1.看懂学生信息管理系统的代码.理解实例方法的用法及实例变量封装的思想及好处
+     2.写一个类Bicycle,有run方法，调用显示骑行的里程(km)
+       def Bicycle:
+           def run(self, km)
+               print("自行车骑行了", km, '公里')
+       再写一个类EBicycle,在Bicycle类的基础上添加电池电量volume属性,
+       和两个方法：
+           1.fill_change(vol) 用来充电vol为电量（度）
+           2.run(km) 方法每骑行10km消耗电量1度
+           同时显示当前电量，当电量耗尽时，则调用Bicycle的run方法继续骑行
+
+           class EBicycle(Bicycle)
+               ...
+               def fill_charge(self,vol):
+                   '''充电'''
+               def run(self, km):
+                   ...
+           b = EBicycle(5)新买的电动车内还有5度点
+           b.run(10)    #电动骑行了10km还剩4度电
+           b.run(100)   #电动骑行了40km还剩0度电，用脚蹬骑行了60km
+           b.fill_charge(10) 充电10度
+           b.run(50)    电动骑行了50km还剩5度电   
+

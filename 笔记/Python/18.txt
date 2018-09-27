@@ -1,0 +1,246 @@
+day17:
+面向对象编程 Object-Orientend Programming
+
+什么是对象 ：
+	对象是指现实中的物体或实体
+什么是面向对象
+	把一切看成对象（示例），用各种对象之间的关系来描述事务
+对象的特征
+	1、对象有很多属性（名词或形容词）
+	年来。姓名，性别
+	2、对象有很多行为（动作。动词）
+	学习，吃饭，睡觉，踢球，工作。。。
+
+什么是类
+   拥有相同的属性和行为的对象分为一组，即为一个类
+    类是用来描述对象的工具，用类可以创建此类的对象
+类和对象示意
+     车（类）-------------------->>BYD   e6(京A。88888）)实例，对象
+	     \
+              \__________________>BWM     X5(京B。0000000) 实例，对象
+     狗（类）---------------------》哈士奇（户籍号：00001）
+          \
+           \_____________________>导盲犬（户籍号：00002）
+
+     int（类）------>100(对象)
+	\
+         \____>200(对象)
+
+
+
+类的创建语句class语句
+语法：
+	class 类名（继承列表）：
+	    '''类文档字符串'''
+	    实例方法定义
+	    类变量定义
+	    类方法定义（@classmethod）
+            静态方法定义（@staticmethod）
+作用：
+	 创建一个类
+	类用于描述对象的行为和属性
+	类用于创建此类的一个或多个对象（实例）
+说明：
+	类名必须为标识符（与变量名命名规则相同，建议首字母大写）
+	类名实质上就是变量，他绑定一个类
+
+示例见
+  class.py
+
+class Dog:
+    '''创建一个Dog类，此类用于描述一种小动物的行为和属性'''
+    pass
+
+构造函数
+    构造函数调用表达式：
+	类名（[创建传参列表]）
+    作用:
+	创建这个类的实例对象，并返回此实例对象的引用关系
+    说明：
+	实例有自己的作用域和名字空间，可以为该实例添加实例变量（也叫属性）
+	实例可以调用类方法和实例方法
+	实例可以访问类变量和实例变量
+示例见：
+
+
+class Dog:
+    '''创建一个Dog类，此类用于描述一种小动物的行为和属性'''
+    pass
+dog1=Dog() #创建Dog类的一个实例
+print(id(dog1)）
+dog2=Dog() #创建Dog类的第二个实例
+print(id(dog2)）
+print（‘------------’）
+lst1=list()
+print(id(lst1))
+
+lst2=list()
+print(id(lst2))
+
+实例方法：（method）
+语法：
+    class 类名（继承列表）
+	def 实例方法名（self，形参名1，形参名2，.........）
+	    ‘方法文档字符串’
+	     语句块
+作用：
+	用于描述一个对象的行为，让此类型的全部对象都拥有相同的行为
+说明：
+	实例方法的是指是函数，是定义在类内的函数
+	实例方法至少有一个形参，第一个形参用来绑定调用这个方案的实例，一把命名为‘self’
+实例方法的调用语句：
+	实例.实例方法名（调用传参）
+     或
+	类名.实例方法名（实例，调用传参）
+
+实例属性 atrribute(也叫实例变量)
+    每个实例可以有自己的变量用来保存对象自己的数据，称为实例变量（也叫属性）
+语法：
+	实例.属性名
+赋值规则同变量的赋值规则
+    首次为属性赋值则创建此属性
+    再次为属性赋值则改变属性的绑定关系
+作用：
+    记录每个对象自身的数据
+示例见：
+attribute.py
+
+class Dog:
+    def eat(self,food):
+        print（self.color,"de",slef.kinds,"zhengczaichi ",food)
+        self.last_food=food
+    def show_last_food(self):
+        print(self.color,"de",self.kinds,"shangcichideshi",self.last_food)
+
+dog1=Dog()
+dog1.kinds="京巴"#添加实例属性
+dog1.color="白色"  #添加
+dog1.color="黄色"  #修改示例属性的绑定关系
+
+dog2=Dog()
+dog2.kinds="藏熬"#另一个对象
+dog2.color="棕色"  #
+  #
+print（dog1.color，'的'，dog1.kinds）
+print（dog2.color，'的'，dog2.kinds）
+
+
+del 语句：
+可以删除对象（实例）的属性
+语法：
+	del 对象.实例变量名
+
+
+示例：
+class Dog:
+    pass
+dog1=Dog()
+dog1.color="baise"
+print(dog1.color)
+del dog1.color
+
+
+
+
+del语句小结：
+1、删除变量  del name
+2、删除列表的元素   del L[1],del L[2] 
+3、删除字典的键   del d{"name"}
+4、删除对象的属性 del dog1.color 
+
+
+初始化方法：
+作用：对新创建的对象添加属性
+语法格式：
+class 类名（继承列表）
+    def __init__(self,[形参列表])：
+	语句块
+    注：【代表其中的内容可省略】
+说明：
+1、初始化方法名必须为‘__init__’不可改变
+2、初始化方法会在构造函数创建实例后自动调用，且将实例自身通过第一个参数self传入__init__方法
+3、构造函数实参将通过__init__方法的参数列表传入到__init__方法中
+4、初始化方法内如果需要return语句返回，则只能返回none
+示例：
+class Car:
+    '''小汽车类'''
+    def __init__(self,c,b,m):
+        self.color=c
+	self.brand=b
+	self.model=m
+	print("初始化方法被调用")
+    def run(self,speed):
+	print(self.color,'的',self.brand,self,model,'正在以',speed,'公里每小时的速度行驶')
+a4=Car()
+a4.run("hongse","aoti","A4")
+T1=Car("蓝色"，"TESLA"，"models")
+
+
+析构方法：
+class类名（继承列表）：
+    def __del__(self):
+	语句块
+析构方法在对象被销毁时自动调用
+Python语言建议不要再对象销毁时做任何事情，因为销毁时间难以确定
+
+示例见：
+class Car:
+    der __init__(self,info):
+	self.info=info
+	print（“汽车对象”，info，“被创建”）
+    def __del__(self):
+	print("汽车对象"，self.info，“被销毁”)
+c1=Car("BYD E6")
+input("请输入回车键继续执行")
+print（“程序退出”）
+
+预置实例属性
+__dict__属性
+__dict__属性绑定一个存储此实例自身变量字典
+示例：
+class Dog:
+    pass
+dog1=Dog()
+print(dog1.__dict__)  #{}
+dog1.color="baise"
+print(dog1.__dict__)  #{'color':'baise'}
+dog1.kinds="jingba"
+print(dog1.__dict__)  #{'color':'baise','kinds':'ijngba'}	
+
+
+__class__属性
+‘__class__’属性绑定创建此实例的类
+作用：
+    可以借助此属性来访问创建此实例的类
+示例：
+class Dog:
+    pass
+dog1=Dog()
+print(dog1.__class__)
+dog2=dOG()
+print(dog2.__class__)
+
+
+   用于类的函数：
+       isinstance(obj,class_or_tuple)
+       返回这个对象boj是否是某个类的对象或者某些类中的一个类的对象，如果返回True,否则返回
+       False
+       type(obj) 返回对象的类型
+
+
+面向对象的综合示例：
+有俩人：
+属性：1、姓名：张三，年龄：35岁
+	2、李四，8
+行为：1、教别人学东西  teach
+2、工作赚钱work
+3，借钱borrow
+事情：
+张三教李四学Python
+李四教张三学王者荣耀
+张三上班赚了1000元
+李四向张三借了200元
+35岁的张三有钱800，他学会的技能：王者荣耀
+8岁的李四有钱200元，他学会的技能。Python
+
+
